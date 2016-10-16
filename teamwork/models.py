@@ -1,12 +1,10 @@
-import logging
 from itertools import chain
 
 from django.conf import settings
 from django.contrib.auth.models import Group, Permission
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes import fields
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
-from django.db import models, transaction
+from django.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 
@@ -202,7 +200,7 @@ class Policy(models.Model):
 
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    content_object = fields.GenericForeignKey('content_type', 'object_id')
 
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL, null=True, blank=True, related_name='creator')
